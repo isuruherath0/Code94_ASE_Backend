@@ -8,22 +8,29 @@ import dotenv from "dotenv";
 import productRoute from './routes/productRoute.js';
 import { createProduct } from './controllers/productController.js';
 import multer from 'multer';
+import helmet from "helmet";
+import morgan from "morgan";
+
+//Configurations
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" })); 
+app.use(morgan("common"));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(express.static(path.join(__dirname, 'uploads')));
-
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 
 //file upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
-        cb(null, "public/assets/uploads/");
+        cb(null, "public/assets");
     },
     filename: function(req, file, cb){
         cb(null, file.originalname);
@@ -34,12 +41,14 @@ const upload = multer({storage: storage});
 
 //Routes 
 
-//Without Multer
+//Without file upload
 app.use('/api/product', productRoute );
 
-//With Multer
+//With file upload
 
-app.post('/api/product', upload.array ('image',5),createProduct); 
+/* Add a new product
+POST /api/product */
+app.post('/api/product', upload.array ('images',5),createProduct); 
 
 //Mongoose setup
 
