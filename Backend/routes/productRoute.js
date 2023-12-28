@@ -1,14 +1,17 @@
-
 import express from 'express';
 const router = express.Router();
-// import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js';
-import { createProduct , getAllProducts , updateProduct , deleteProduct} from '../controllers/productController.js';
+import { createProduct , getAllProducts , updateProduct , deleteProduct ,getProductById} from '../controllers/productController.js';
 
 
 /* GET all products
 GET /api/product */
 
 router.get('/', getAllProducts);
+
+/* GET a product by id
+GET /api/product/:id */
+
+router.get('/:id', getProductById);
 
 /* UPDATE a product
 PUT /api/product/:id */
