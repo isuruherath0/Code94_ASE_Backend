@@ -8,9 +8,6 @@ import { createProduct , getAllProducts , updateProduct , deleteProduct} from '.
 // GET all products
 router.get('/', getAllProducts);
 
-// CREATE a new product
-router.post('/', createProduct);
-
 //UPDATE a product
 router.put('/:id', updateProduct);
 
