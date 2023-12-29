@@ -79,6 +79,24 @@ export const updateProduct = async (req, res) => {
     }
 };
 
+//controller to update a product's favourite status
+
+export const updateFavourite = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { favourite } = req.body;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).send('Product Not Found');
+        }
+        const updatedProduct = { favourite, _id: id };
+        await Product.findByIdAndUpdate(id, updatedProduct, { new: true });
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+};
+
+
 
 // Controller to delete a product
 

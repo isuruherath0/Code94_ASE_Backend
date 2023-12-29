@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { createProduct , getAllProducts , updateProduct , deleteProduct ,getProductById} from '../controllers/productController.js';
+import { createProduct , getAllProducts , updateProduct , deleteProduct ,getProductById , updateFavourite} from '../controllers/productController.js';
 
 
 /* GET all products
@@ -22,5 +22,11 @@ router.put('/:id', updateProduct);
 DELETE /api/product/:id */
 
 router.delete('/:id', deleteProduct);
+
+
+/* UPDATE favourite status
+PUT /api/product/favourite/:id */
+
+router.put('/favourite/:id', updateFavourite);
 
 export default router;
