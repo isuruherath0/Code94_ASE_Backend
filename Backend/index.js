@@ -48,7 +48,7 @@ app.use('/api/product', productRoute );
 
 /* Add a new product
 POST /api/product */
-app.post('/api/product', upload.array ('images',5),createProduct); 
+app.post('/api/product', upload.single ('images'),createProduct); 
 
 //Mongoose setup
 
